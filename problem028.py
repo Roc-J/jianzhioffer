@@ -2,21 +2,30 @@
 # -*- coding:utf-8 -*- 
 # Author: qjk
 
+'''
+摩尔投票
+'''
 class Solution:
     def MoreThanHalfNum_Solution(self, numbers):
         # write code here
-        if not numbers:
-            return 0
-        d = dict()
-        for item in numbers:
-            if item not in d:
-                d[item] = 1
+        result = numbers[0]
+        times = 1
+        for i in range(1, len(numbers)):
+            if times == 0:
+                result = numbers[i]
+                times = 1
+            elif numbers[i] == result:
+                times += 1
             else:
-                d[item] += 1
+                times -= 1
 
-        result = sorted(d.items(), key=lambda item:item[1])
-        if result[-1][1] > len(numbers)/2:
-            return result[-1][0]
+        times = 0
+        for item in numbers:
+            if item == result:
+                times += 1
+
+        if times > len(numbers)/2:
+            return result
         else:
             return 0
 
